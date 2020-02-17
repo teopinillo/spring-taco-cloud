@@ -63,4 +63,12 @@ public class DesignTacoController {
 				 .filter(x -> x.getType().equals(type))
 				 .collect(Collectors.toList());
 	}	
+	
+	@PostMapping
+	public String processDesign (Taco design) {
+		//Save the taco design
+		//TODO: implemented on chapter 3
+		return "redirect:/orders/current";
+	}
+	//TODO: last page 40.
 }
