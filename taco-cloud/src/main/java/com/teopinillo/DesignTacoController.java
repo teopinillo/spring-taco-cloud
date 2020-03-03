@@ -65,6 +65,7 @@ public class DesignTacoController {
 	}	
 	
 	@PostMapping
+	//handle a POST request from /design
 	public String processDesign (Taco design) {
 		//Save the taco design
 		//TODO: implemented on chapter 3
