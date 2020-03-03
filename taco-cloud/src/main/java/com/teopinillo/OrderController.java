@@ -13,13 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping ("/orders")
 public class OrderController {
 	
-	@GetMapping("/current")			// get -> orders/current
-     public String    				// the web page
-     orderForm (Model model) {
-		model.addAttribute("order", //order will be the object
-				new Order());       // the object
-		return "orderForm";         //the web page name
-	}
+
 	
 	/*
 	 * When the processOrder() method is called to handle a submitted order, it’s given an
@@ -29,6 +23,18 @@ public class OrderController {
 	@PostMapping
 	public String processOrder(Order order) {
 		log.info("Order submitted: " + order);
-		return "redirect:/";
+		return "redirect:/"; 	//indicates a redirect view. It indicates that after processingDesign() completes,
+								//, the user's browser should be redirected to the relative path 
+								// /order/current
+		}
+			
+	@GetMapping("/current")			// get -> orders/current
+    public String    				// the web page
+    orderForm (Model model) {
+		model.addAttribute("order", //order will be the object
+				new Order());       // the object
+		return "orderForm";         //the web page name
 	}
+	
+	
 }
