@@ -3,6 +3,7 @@ package com.teopinillo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +13,22 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping ("/orders")
 public class OrderController {
 	
-	@GetMapping("/current")
-     public String orderForm (Model model) {
-		model.addAttribute("order", new Order());
-		return "orderForm";
+	@GetMapping("/current")			// get -> orders/current
+     public String    				// the web page
+     orderForm (Model model) {
+		model.addAttribute("order", //order will be the object
+				new Order());       // the object
+		return "orderForm";         //the web page name
+	}
+	
+	/*
+	 * When the processOrder() method is called to handle a submitted order, it’s given an
+		Order object whose properties are bound to the submitted form fields. Order, much
+		like Taco, is a fairly straightforward class that carries order information.
+	 */
+	@PostMapping
+	public String processOrder(Order order) {
+		log.info("Order submitted: " + order);
+		return "redirect:/";
 	}
 }

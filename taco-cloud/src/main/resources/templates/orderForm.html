@@ -6,6 +6,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- Without an action specified, the form  would submit an HTTP POST request back to the same URL that presented 
+the form. But here we specified that the form should be POSTed to /orders (using Thymeleaf's @{...} operator for a conntext
+relative path) -->
 	<form method="POST" th:action="@{/orders}" th:object="${order}">
 		<h1>Order your taco creations!</h1>
 		<img th:src="@{/images/beef-tacos-1.jpg}" /> <a th:href="@{/design}"
