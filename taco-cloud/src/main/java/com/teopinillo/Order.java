@@ -4,11 +4,14 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
-
+import java.util.Date;
 import lombok.Data;
 
 @Data
 public class Order {
+	
+	private Long ID;
+	private Date placedAt;
 
 	@NotBlank (message="Name is requiered")
 	private String name;
