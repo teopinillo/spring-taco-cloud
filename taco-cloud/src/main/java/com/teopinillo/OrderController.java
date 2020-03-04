@@ -1,7 +1,10 @@
 package com.teopinillo;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,10 @@ public class OrderController {
 		like Taco, is a fairly straightforward class that carries order information.
 	 */
 	@PostMapping
-	public String processOrder(Order order) {
+	public String processOrder(@Valid Order order, Errors errors) {
+		if (errors.hasErrors()) {
+			return "order";
+		}
 		log.info("Order submitted: " + order);
 		return "redirect:/"; 	//indicates a redirect view. It indicates that after processingDesign() completes,
 								//, the user's browser should be redirected to the relative path 
