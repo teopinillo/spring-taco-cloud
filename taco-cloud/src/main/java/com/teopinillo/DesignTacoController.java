@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -66,10 +65,13 @@ public class DesignTacoController {
 	
 	@PostMapping
 	//handle a POST request from /design
-	public String processDesign (Taco design) {
+	public String processDesign (@Valid Taco design, Errors errors) {
+		if (errors.hasErrors()) {
+			return "design";
+		}
 		//Save the taco design
 		//TODO: implemented on chapter 3
 		return "redirect:/orders/current";
 	}
-	//TODO: last page 40.
+	
 }
