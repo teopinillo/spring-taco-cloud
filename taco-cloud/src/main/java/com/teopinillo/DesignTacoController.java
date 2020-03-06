@@ -1,9 +1,12 @@
 package com.teopinillo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.teopinillo.Ingredient.Type;
+import com.teopinillo.data.IngredientRepository;
 
 import lombok.extern.slf4j.*;
 
@@ -26,13 +30,14 @@ public class DesignTacoController {
 
 	/*
 	 * The class-level @RequestMapping specification is refined with the @GetMapping annotation that adorns the showDesignForm() method. 
-	 * @GetMapping, paired with the class level @ReuqestMapping, specifies tha when an HTTP GET request is received for /design
+	 * @GetMapping, paired with the class level @RequestMapping, specifies that when an HTTP GET request is received for /design
 	 * showDesignForm() will be called to handle the request.
 	 */
 	@GetMapping	
 	//Model is an object that ferries data between a controller and whatever view is charged with rendering that data.
 	//Ultimately, data that's placed in Model attributes is copied into the servlet request attributes, where the view can find them
 	//
+	/*
 	public String showDessignForm (Model model) {
 		List<Ingredient> ingredients = Arrays.asList(
 				new Ingredient ("FLTO", "Flour Tortilla",Type.WRAP),
@@ -54,6 +59,7 @@ public class DesignTacoController {
 		//"design" is the logical name of the view that will be used to render the model to the browser
 		return "design";
 	}
+	*/
 	
 	//filters the list by ingredient 
 	private List<Ingredient> filterByType (List <Ingredient> ingredients, Type type) {
@@ -62,6 +68,7 @@ public class DesignTacoController {
 				 .filter(x -> x.getType().equals(type))
 				 .collect(Collectors.toList());
 	}	
+	
 	
 	@PostMapping
 	//handle a POST request from /design
@@ -73,5 +80,30 @@ public class DesignTacoController {
 		//TODO: implemented on chapter 3
 		return "redirect:/orders/current";
 	}
+	
+	//With JdbcIngredientRepository complete, we can inject it, and use it to provide a list of
+	//Ingredients objects instead of using hardcoded values (as line 37 and forward ).
+	private final IngredientRepository ingredientRepo;
+	
+	@Autowired
+	public DesignTacoController (IngredientRepository ingredientRepo) {
+		this.ingredientRepo = ingredientRepo;
+	}
+	
+	@GetMapping
+	public String showDesignForm (Model model) {
+		List<Ingredient> ingredients = new ArrayList<>();
+		ingredientRepo.findAll().forEach(i -> ingredients.add(i));
+		
+		Type[] types = Ingredient.Type.values();
+		for (Type type : types) {
+			model.addAttribute (type.toString().toLowerCase(),
+					filterByType(ingredients, type));
+		}
+		return "design";
+	}
+	
+	
+	
 	
 }
