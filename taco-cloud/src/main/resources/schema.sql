@@ -12,13 +12,13 @@ create table if not exists Taco (
 
 create table if not exists Taco_Ingredients (
  taco bigint not null,
- ingedient varchar(4) not null
+ ingredient varchar(4) not null
  );
  
- alter table Taco_ingredients
+ alter table Taco_Ingredients
  		add foreign key(taco) references Taco(id);
  		
- alter table Taco_ingredients
+ alter table Taco_Ingredients
  		add foreign key (ingredient) references Ingredient(id);
  		
  create table if not exists Taco_Order (
