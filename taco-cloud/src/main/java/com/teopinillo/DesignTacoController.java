@@ -26,17 +26,19 @@ import lombok.extern.slf4j.*;
 //and automatically create an instance of DesignTacoController as a bean in the Spring application context.
 @RequestMapping ("/design")  //specifies the kind of request that this controller handles. (whose path begins with /design)
 @SessionAttributes("order")
-
 public class DesignTacoController {
 
 	/*
-	 * The class-level @RequestMapping specification is refined with the @GetMapping annotation that adorns the showDesignForm() method. 
-	 * @GetMapping, paired with the class level @RequestMapping, specifies that when an HTTP GET request is received for /design
-	 * showDesignForm() will be called to handle the request.
+	 * The class-level @RequestMapping specification is refined with the @GetMapping annotation that adorns the
+	 * showDesignForm() method. 
+	 * @GetMapping, paired with the class level @RequestMapping, specifies that when an HTTP GET request is received
+	 * for /design, showDesignForm() will be called to handle the request.
 	 */
-	@GetMapping	
+	
+	//@GetMapping	
 	//Model is an object that ferries data between a controller and whatever view is charged with rendering that data.
-	//Ultimately, data that's placed in Model attributes is copied into the servlet request attributes, where the view can find them
+	//Ultimately, data that's placed in Model attributes is copied into the servlet request attributes, 
+	//where the view can find them
 	//
 	/*
 	public String showDessignForm (Model model) {
@@ -101,6 +103,8 @@ public class DesignTacoController {
 			model.addAttribute (type.toString().toLowerCase(),
 					filterByType(ingredients, type));
 		}
+		//this line was omitted in the example and the app crash
+		model.addAttribute("design", new Taco());
 		return "design";
 	}
 	
