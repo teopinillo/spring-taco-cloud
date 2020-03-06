@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +12,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.teopinillo.Ingredient.Type;
 import com.teopinillo.data.IngredientRepository;
-
 import lombok.extern.slf4j.*;
 
 
@@ -26,6 +25,8 @@ import lombok.extern.slf4j.*;
 //Identify this class as a Controller and to mark it as a candidate for component scanning, so that Spring will discover it
 //and automatically create an instance of DesignTacoController as a bean in the Spring application context.
 @RequestMapping ("/design")  //specifies the kind of request that this controller handles. (whose path begins with /design)
+@SessionAttributes("order")
+
 public class DesignTacoController {
 
 	/*
