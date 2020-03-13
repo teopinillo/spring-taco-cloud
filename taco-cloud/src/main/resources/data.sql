@@ -12,4 +12,5 @@ insert into Ingredient (id, name, type) values ('TMTO', 'Diced Tomatoes','VEGGIE
 insert into Ingredient (id, name, type) values ('LETC', 'Lettuce','VEGGIES');
 insert into Ingredient (id, name, type) values ('CHED', 'Cheddar','CHEESE');
 insert into Ingredient (id, name, type) values ('JACK', 'Monterry Jack','CHEESE');
+insert into Ingredient (id, name, type) values ('SLSA', 'Salsa', 'SAUCE');
 insert into Ingredient (id, name, type) values ('SRCR', 'Sour Cream','SAUCE');

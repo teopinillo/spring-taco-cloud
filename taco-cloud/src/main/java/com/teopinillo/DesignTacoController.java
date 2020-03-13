@@ -10,16 +10,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.sun.tools.sjavac.Log;
 import com.teopinillo.Ingredient.Type;
 import com.teopinillo.data.IngredientRepository;
+import com.teopinillo.data.TacoRepository;
+
 import lombok.extern.slf4j.*;
 
 
-@Slf4j   //Lombok-provided annotation that, at runtime, will automatically generate and SLF4J (Single logging Facade
+@Slf4j   
+//Lombok-provided annotation that, at runtime, will automatically generate and SLF4J (Single logging Facade
 //for Java, https://www.slf4j.org/) Logger in the class.
 @Controller
 //Identify this class as a Controller and to mark it as a candidate for component scanning, so that Spring will discover it
@@ -27,6 +32,11 @@ import lombok.extern.slf4j.*;
 @RequestMapping ("/design")  //specifies the kind of request that this controller handles. (whose path begins with /design)
 @SessionAttributes("order")
 public class DesignTacoController {
+	
+	//With JdbcIngredientRepository complete, we can inject it, and use it to provide a list of
+	//Ingredients objects instead of using hard coded values (as line 37 and forward ).
+	private final IngredientRepository ingredientRepo;
+	private TacoRepository designRepo;
 
 	/*
 	 * The class-level @RequestMapping specification is refined with the @GetMapping annotation that adorns the
@@ -63,36 +73,32 @@ public class DesignTacoController {
 		return "design";
 	}
 	*/
+		
+	@ModelAttribute (name = "order")
+	public Order order() {
+		return new Order();
+	}
 	
-	//filters the list by ingredient 
-	private List<Ingredient> filterByType (List <Ingredient> ingredients, Type type) {
-		 return ingredients
-				 .stream()
-				 .filter(x -> x.getType().equals(type))
-				 .collect(Collectors.toList());
-	}	
+	@Autowired
+	public DesignTacoController (IngredientRepository ingredientRepo,
+								TacoRepository designRepo) {
+		this.ingredientRepo = ingredientRepo;
+		this.designRepo = designRepo;
+	}
 	
-	
-	@PostMapping
-	//handle a POST request from /design
-	public String processDesign (@Valid Taco design, Errors errors) {
+	@PostMapping  //handle a POST request from /design
+	public String processDesign (@Valid Taco design, Errors errors, @ModelAttribute Order order) {
 		if (errors.hasErrors()) {
 			return "design";
 		}
 		//Save the taco design
-		//TODO: implemented on chapter 3
+		Taco saved = designRepo.save(design);
+		order.addDesign(saved);
+		
+		log.info("Processing design: " + design);
 		return "redirect:/orders/current";
 	}
-	
-	//With JdbcIngredientRepository complete, we can inject it, and use it to provide a list of
-	//Ingredients objects instead of using hardcoded values (as line 37 and forward ).
-	private final IngredientRepository ingredientRepo;
-	
-	@Autowired
-	public DesignTacoController (IngredientRepository ingredientRepo) {
-		this.ingredientRepo = ingredientRepo;
-	}
-	
+		
 	@GetMapping
 	public String showDesignForm (Model model) {
 		List<Ingredient> ingredients = new ArrayList<>();
@@ -100,15 +106,22 @@ public class DesignTacoController {
 		
 		Type[] types = Ingredient.Type.values();
 		for (Type type : types) {
+			log.info("Type found:" + type.toString().toLowerCase());
 			model.addAttribute (type.toString().toLowerCase(),
 					filterByType(ingredients, type));
 		}
 		//this line was omitted in the example and the app crash
-		model.addAttribute("design", new Taco());
+		//model.addAttribute("design", new Taco());
 		return "design";
 	}
 	
-	
+	//filters the list by ingredient 
+	private List<Ingredient> filterByType (List <Ingredient> ingredients, Type type) {
+		 return ingredients
+				 .stream()
+				 .filter(x -> x.getType().equals(type))
+				 .collect(Collectors.toList());
+	}
 	
 	
 }

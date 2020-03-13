@@ -3,10 +3,13 @@ package com.teopinillo;
 import java.util.Date;
 import java.util.List;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@RequiredArgsConstructor
 public class Taco {
 	
 	private Long id;
@@ -27,5 +30,5 @@ private String name;
 //
 //private List<Ingredient> ingredients;
 @Size(min=1, message="You must choose at least 1 ingredient")
-private List<String> ingredients;
+private List<Ingredient> ingredients;
 }
