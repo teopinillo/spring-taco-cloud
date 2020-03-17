@@ -2,14 +2,14 @@ package com.teopinillo.data;
 
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.teopinillo.Order;
 
 public interface OrderRepository extends CrudRepository <Order, Long >{
-	List<Order> findByDeliveyZip (String deliveryZip);
+	
+	List<Order> findByDeliveryZip (String deliveryZip);
 	
 	List<Order> readOrdersByDeliveryZipAndPlacedAtBetween (
 			String deliveryZip, Date startDate, Date endDate );
