@@ -1,46 +1,48 @@
 package com.teopinillo;
 
 import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.extern.slf4j.Slf4j;
+import com.teopinillo.data.OrderRepository;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Slf4j
 @Controller
 @RequestMapping ("/orders")
+@SessionAttributes("order")
 public class OrderController {
 	
-
+	private OrderRepository orderRepo;
 	
-	/*
-	 * When the processOrder() method is called to handle a submitted order, it’s given an
-		Order object whose properties are bound to the submitted form fields. Order, much
-		like Taco, is a fairly straightforward class that carries order information.
-	 */
+	public OrderController(OrderRepository orderRepo) {
+		this.orderRepo = orderRepo;
+	}
+	
+	@GetMapping("/current")	
+    public String orderForm (Model model) {		
+		return "orderForm";
+	}
+	
 	@PostMapping
-	public String processOrder(@Valid Order order, Errors errors) {
+	public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus) {
 		if (errors.hasErrors()) {
 			return "order";
 		}
 		log.info("Order submitted: " + order);
+		orderRepo.save(order);
+		sessionStatus.setComplete();
 		return "redirect:/"; 	//indicates a redirect view. It indicates that after processingDesign() completes,
 								//, the user's browser should be redirected to the relative path 
 								// /order/current
 		}
 			
-	@GetMapping("/current")			// get -> orders/current
-    public String    				// the web page
-    orderForm (Model model) {
-		model.addAttribute("order", //order will be the object
-				new Order());       // the object
-		return "orderForm";         //the web page name
-	}
+	
 	
 	
 }
