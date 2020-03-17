@@ -14,10 +14,11 @@ public interface OrderRepository extends CrudRepository <Order, Long >{
 	List<Order> readOrdersByDeliveryZipAndPlacedAtBetween (
 			String deliveryZip, Date startDate, Date endDate );
 	
-	List<Order> findByDeliveryCityOrderByDeliveryTo(String city);
+	//Error:  No property deliveryTo found for type Order!
+	//List<Order> findByDeliveryCityOrderByDeliveryTo(String city);
 	
-	@Query ("order o where o.deliveryCity='Seatle")
-	List<Order> readOrdersDeliveredInSeatle();
+	//@Query ("SELECT order o WHERE o.deliveryCity='Seatle'")
+	//List<Order> readOrdersDeliveredInSeatle();
 	
 	
 }
