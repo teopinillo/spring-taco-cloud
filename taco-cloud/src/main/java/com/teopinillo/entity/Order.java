@@ -1,4 +1,4 @@
-package com.teopinillo;
+package com.teopinillo.entity;
 
 import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.CreditCardNumber;

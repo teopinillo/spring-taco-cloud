@@ -1,4 +1,4 @@
-package com.teopinillo;
+package com.teopinillo.entity;
 
 import lombok.AccessLevel;
 import lombok.Data;

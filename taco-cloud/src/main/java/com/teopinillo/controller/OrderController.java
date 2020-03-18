@@ -1,4 +1,4 @@
-package com.teopinillo;
+package com.teopinillo.controller;
 
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.extern.slf4j.Slf4j;
 import com.teopinillo.data.OrderRepository;
 import org.springframework.web.bind.support.SessionStatus;
+import com.teopinillo.entity.Order;
 
 @Slf4j
 @Controller
