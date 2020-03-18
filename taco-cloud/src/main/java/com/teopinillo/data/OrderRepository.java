@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import com.teopinillo.Order;
+import com.teopinillo.entity.Order;
 
 public interface OrderRepository extends CrudRepository <Order, Long >{
 	

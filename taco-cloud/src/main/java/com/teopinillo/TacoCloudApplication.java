@@ -4,8 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.teopinillo.Ingredient.Type;
+
 import com.teopinillo.data.IngredientRepository;
+import com.teopinillo.entity.Ingredient;
+import com.teopinillo.entity.Ingredient.Type;
 
 @SpringBootApplication
 public class TacoCloudApplication {

@@ -1,4 +1,4 @@
-package com.teopinillo;
+package com.teopinillo.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sun.tools.sjavac.Log;
-import com.teopinillo.Ingredient.Type;
 import com.teopinillo.data.IngredientRepository;
 import com.teopinillo.data.TacoRepository;
+import com.teopinillo.entity.Ingredient;
+import com.teopinillo.entity.Order;
+import com.teopinillo.entity.Taco;
+import com.teopinillo.entity.Ingredient.Type;
 
 import lombok.extern.slf4j.*;
 

@@ -1,4 +1,4 @@
-package com.teopinillo;
+package com.teopinillo.entity;
 
 import java.util.Date;
 import java.util.List;
