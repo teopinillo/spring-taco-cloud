@@ -11,19 +11,19 @@ import com.teopinillo.entity.RegistrationForm;
 
 @Controller
 @RequestMapping("/register")
-public class RegisterController {
+public class RegistrationController {
 
 	private UserRepository userRepo;
 	private PasswordEncoder passwordEncoder;
 
-	public RegisterController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
+	public RegistrationController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
 		this.userRepo = userRepo;
 		this.passwordEncoder = passwordEncoder;
 	}
 
 	@GetMapping
 	public String registerForm() {
-		return "registration";
+		return "registration_adv";
 	}
 	
 	@PostMapping

@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Taco Cloud</title>
+<link
+	href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600'
+	rel='stylesheet' type='text/css'>
+<link
+	href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+	rel="stylesheet">
+<link rel="stylesheet" th:href="@{/registration_style.css}" />
+
+</head>
+
+<body>
+	<div class="testbox">
+		<h1>Registration</h1>
+
+		<form method="POST" th:action="@{/register}" id="registerForm">
+			<hr>
+			<div class="accounttype">
+				<input type="radio" value="None" id="radioOne" name="account"
+					checked /> <label for="radioOne" class="radio" chec>Personal</label>
+				<input type="radio" value="None" id="radioTwo" name="account" /> <label
+					for="radioTwo" class="radio">Company</label>
+			</div>
+			<hr>
+			<!-- email -->
+			<label id="icon" for="name">
+				<i class="icon-envelope "></i>
+			</label>
+			 <input type="text" name="email" id="email" placeholder="email" required />
+			 
+			 <!-- Name -->
+			 <label id="icon" for="username">
+			 	<i class="icon-user">
+			 	</i>
+			 </label>
+				  <input type="text" name="username" id="username" placeholder="username" required />
+			 
+			 <!--  Password -->
+			 <label id="icon" for="password">
+			 	<i class="icon-shield"></i>
+			 </label> 
+			 <input type="password" name="password" id="password" placeholder="password" required />
+			 
+			 <!--  Confirm Password -->
+			 <label id="icon" for="confirm">
+			 	<i class="icon-shield"></i>
+			 </label> 
+			 <input type="password" name="confirm" id="confirm" placeholder="confirm password" required />
+			 
+			  <!--  Full Name -->
+			 <label id="icon" for="fullname">
+			 	<i class="icon-male"></i>
+			 </label> 
+			 <input type="text" name="fullname" id="fullname" placeholder="fullname" required />
+			 
+			  <!--  Street -->
+			 <label id="icon" for="street">
+			 	<i class="icon-road"></i>
+			 </label> 
+			 <input type="text" name="street" id="street" placeholder="street" required />
+			 
+			 <!--  City -->
+			 <label id="icon" for="city">
+			 	<i class="icon-building"></i>
+			 </label> 
+			 <input type="text" name="city" id="city" placeholder="city"/>
+			 
+			 <!--  State -->
+			 <label id="icon" for="state">
+			 	<i class="icon-map-marker"></i>
+			 </label> 
+			 <input type="text" name="state" id="state" placeholder="state" required />
+			 
+			 <!--  Zip -->
+			 <label id="icon" for="zip">
+			 	<i class="icon-compass"></i>
+			 </label> 
+			 <input type="text" name="zip" id="zip" placeholder="zip"/>
+			 
+			 <!--  Phone -->
+			 <label id="icon" for="phone">
+			 	<i class="icon-phone"></i>
+			 </label> 
+			 <input type="tel" name="phone" id="phone" 
+			 	placeholder="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+        		required />
+			 
+			<!-- 
+			<div class="gender">
+				<input type="radio" value="None" id="male" name="gender" checked />
+				<label for="male" class="radio" chec>Male</label>
+				<input type="radio" value="None" id="female" name="gender" />
+			<label 	for="female" class="radio">Female</label>
+			</div>
+			-->
+			<p>
+				By clicking Register, you agree on our <a href="#">terms and
+					condition</a>.
+			</p>
+			<a href="#" class="button">Register</a>
+		</form>
+	</div>
+</body>
+</html>
