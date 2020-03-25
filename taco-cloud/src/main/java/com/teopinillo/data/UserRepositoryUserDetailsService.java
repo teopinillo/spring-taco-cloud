@@ -11,16 +11,17 @@ import com.teopinillo.entity.User;
 @Service
 public class UserRepositoryUserDetailsService implements UserDetailsService {
 
-	private UserRepository userRepo;
-	
 	@Autowired
-	public UserRepositoryUserDetailsService (UserRepository userRepo) {
-		this.userRepo = userRepo;
-	}
+	private UserRepository userRepository;
+	
+	//@Autowired
+	//public UserRepositoryUserDetailsService (UserRepository userRepo) {
+	//	this.userRepo = userRepo;
+	//}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepo.findByUsername(username);
+		User user = userRepository.findByUsername(username);
 		if (user!=null) {
 			return user;
 		}

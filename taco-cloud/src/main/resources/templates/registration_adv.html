@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
 <title>Taco Cloud</title>
@@ -20,6 +20,8 @@
 		<h1>Registration</h1>
 
 		<form method="POST" th:action="@{/register}" id="registerForm">
+			<!-- Account Type -->
+			<!-- 
 			<hr>
 			<div class="accounttype">
 				<input type="radio" value="None" id="radioOne" name="account"
@@ -27,6 +29,7 @@
 				<input type="radio" value="None" id="radioTwo" name="account" /> <label
 					for="radioTwo" class="radio">Company</label>
 			</div>
+			-->
 			<hr>
 			<!-- email -->
 			<label id="icon" for="name">
@@ -99,10 +102,13 @@
 			<label 	for="female" class="radio">Female</label>
 			</div>
 			-->
+			<!-- Agreement  -->
+			<!-- 
 			<p>
 				By clicking Register, you agree on our <a href="#">terms and
 					condition</a>.
 			</p>
+			-->
 			<a href="#" class="button">Register</a>
 		</form>
 	</div>

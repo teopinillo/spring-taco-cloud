@@ -1,9 +1,14 @@
 package com.teopinillo.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 //Notes: StandardPAsswordEncoder is not considered secure.
@@ -20,28 +27,45 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
-
-
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	 @Autowired
+	private final int encoderOp = 3;
+	
+	 @Autowired	 
 	 private UserDetailsService userDetailsService;
+		 
+	@Bean
+	public AuthenticationProvider authProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder( encoder() );
+		return provider;
+		
+	}
 	 
 	 @Bean
 	 public PasswordEncoder encoder() {
-		 return new StandardPasswordEncoder ("53cr3t");
+		 switch (encoderOp){
+		 case 1: return new StandardPasswordEncoder ("53cr3t");
+		 case 2: return NoOpPasswordEncoder.getInstance();
+		 case 3: return new BCryptPasswordEncoder();
+		 }
+		 return NoOpPasswordEncoder.getInstance();
 	 }
 	 
 	 @Override
 	 protected void configure (AuthenticationManagerBuilder auth) throws Exception {
-		  auth
+		 auth
 		  .userDetailsService (userDetailsService)
 		  .passwordEncoder(encoder());
 	 }
 	 
+
 	 //By default Spring Security required user authentication.
 	 //But login and registration page should be available to unauthenticated users.
 	 // - Requiring that certain security conditions be met before allowing a request to be served
@@ -60,7 +84,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 .antMatchers("/","/**").permitAll()
 		 .and()
 		 .formLogin()		//defines custom login page
-		 .loginPage("/login");
+		 .loginPage("/login").permitAll()
+		 .and()
+		 .logout()
+		 .invalidateHttpSession(true)
+		 .clearAuthentication(true)
+		 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		 .logoutSuccessUrl("/logout");
+		
 		 
 		 // Configuration methods to define how a path is to be secured
 		 // access(String) 			Allows access if the given SpEL expression evaluates to true
@@ -76,6 +107,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 // not() Negates the effect of any of the other access methods
 		 // permitAll() Allows access unconditionally
 		 // rememberMe() Allows access for users who are authenticated via remember-me
+		 
+		 
 		 
 	 }
 	 	 
